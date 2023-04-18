@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: Colors.grey.shade900,
       ),
-      home:  MainMoviesScreen(),
+      home:  const MainMoviesScreen(),
     );
   }
 }
