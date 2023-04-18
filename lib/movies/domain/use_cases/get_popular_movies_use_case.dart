@@ -6,13 +6,13 @@ import '../../../core/error/failure.dart';
 import '../entities/movie.dart';
 import '../repository/base_movie_repository.dart';
 
-class GetPopularMoviesUseCase extends BaseUseCases<List<Movie>> {
+class GetPopularMoviesUseCase extends BaseUseCases<List<Movie>,NoParameters> {
   final BaseMoviesRepository baseMoviesRepository;
   GetPopularMoviesUseCase(this.baseMoviesRepository);
 
 
   @override
-  Future<Either<Failure, List<Movie>>> call() async {
+  Future<Either<Failure, List<Movie>>> call(NoParameters parameters) async {
     return await baseMoviesRepository.getPopularMovies();
   }
 

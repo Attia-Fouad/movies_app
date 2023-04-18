@@ -7,6 +7,7 @@ import '../../../core/network/api_constance.dart';
 import '../../../core/utils/enums.dart';
 import '../controller/movies_bloc.dart';
 import '../controller/movies_state.dart';
+import '../screens/movie_detail_screen.dart';
 
 class PopularComponent extends StatelessWidget {
   const PopularComponent({Key? key}) : super(key: key);
@@ -43,6 +44,8 @@ class PopularComponent extends StatelessWidget {
                         padding: const EdgeInsets.only(right: 8.0),
                         child: InkWell(
                           onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => MovieDetailScreen(id: movie.id,),));
+
                             /// TODO : NAVIGATE TO  MOVIE DETAILS
                           },
                           child: ClipRRect(
