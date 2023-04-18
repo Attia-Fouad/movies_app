@@ -96,7 +96,7 @@ class MovieDetailContent extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(state.movieDetail!.title,
+                        SelectableText(state.movieDetail!.title,
                             style: GoogleFonts.poppins(
                               fontSize: 23,
                               fontWeight: FontWeight.w700,
@@ -114,7 +114,7 @@ class MovieDetailContent extends StatelessWidget {
                                 color: Colors.grey[800],
                                 borderRadius: BorderRadius.circular(4.0),
                               ),
-                              child: Text(
+                              child: SelectableText(
                                 state.movieDetail!.releaseDate.split('-')[0],
                                 style: const TextStyle(
                                   fontSize: 16.0,
@@ -131,7 +131,7 @@ class MovieDetailContent extends StatelessWidget {
                                   size: 20.0,
                                 ),
                                 const SizedBox(width: 4.0),
-                                Text(
+                                SelectableText(
                                   (state.movieDetail!.voteAverage / 2).toStringAsFixed(1),
                                   style: const TextStyle(
                                     fontSize: 16.0,
@@ -140,7 +140,7 @@ class MovieDetailContent extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(width: 4.0),
-                                Text(
+                                SelectableText(
                                   '(${state.movieDetail!.voteAverage})',
                                   style: const TextStyle(
                                     fontSize: 1.0,
@@ -151,7 +151,7 @@ class MovieDetailContent extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(width: 16.0),
-                            Text(
+                            SelectableText(
                               _showDuration(state.movieDetail!.runtime),
                               style: const TextStyle(
                                 color: Colors.white70,
@@ -163,7 +163,7 @@ class MovieDetailContent extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 20.0),
-                        Text(
+                        SelectableText(
                           state.movieDetail!.overview,
                           style: const TextStyle(
                             fontSize: 14.0,
@@ -172,7 +172,7 @@ class MovieDetailContent extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 8.0),
-                        Text(
+                        SelectableText(
                           'Genres: ${_showGenres(state.movieDetail!.genres)}',
                           style: const TextStyle(
                             color: Colors.white70,
@@ -192,7 +192,7 @@ class MovieDetailContent extends StatelessWidget {
                   child: FadeInUp(
                     from: 20,
                     duration: const Duration(milliseconds: 500),
-                    child: Text(
+                    child: SelectableText(
                       'More like this'.toUpperCase(),
                       style: const TextStyle(
                         fontSize: 16.0,
@@ -213,7 +213,7 @@ class MovieDetailContent extends StatelessWidget {
 
         case RequestState.error:
           return Center(
-            child: Text(state.movieDetailsMessage),
+            child: SelectableText(state.movieDetailsMessage),
           );
       }
 
@@ -256,24 +256,29 @@ class MovieDetailContent extends StatelessWidget {
               duration: const Duration(milliseconds: 500),
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-                child: CachedNetworkImage(
-                  imageUrl:recommendation.backdropPath!=null? ApiConstance.imageUrl(recommendation.backdropPath!):'https://w7.pngwing.com/pngs/919/963/png-transparent-error-check-mark-red-cross-miscellaneous-angle-text.png',
-                  placeholder: (context, url) => Shimmer.fromColors(
-                    baseColor: Colors.grey[850]!,
-                    highlightColor: Colors.grey[800]!,
-                    child: Container(
-                      height: 170.0,
-                      width: 120.0,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(8.0),
+                child:InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => MovieDetailScreen(id: state.recommendation[index].id,),));
+                  },
+                  child: CachedNetworkImage(
+                    imageUrl:recommendation.backdropPath!=null? ApiConstance.imageUrl(recommendation.backdropPath!):'https://w7.pngwing.com/pngs/919/963/png-transparent-error-check-mark-red-cross-miscellaneous-angle-text.png',
+                    placeholder: (context, url) => Shimmer.fromColors(
+                      baseColor: Colors.grey[850]!,
+                      highlightColor: Colors.grey[800]!,
+                      child: Container(
+                        height: 170.0,
+                        width: 120.0,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
                       ),
                     ),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    height: 180.0,
+                    fit: BoxFit.cover,
                   ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                  height: 180.0,
-                  fit: BoxFit.cover,
-                ),
+                )
               ),
             );
           },
