@@ -16,8 +16,15 @@ final sl = GetIt.instance;
 class ServicesLocator {
   void init() {
     // Bloc
-    sl.registerFactory(() => MoviesBloc(sl(),sl(),sl(),));
-    sl.registerFactory(() => MovieDetailsBloc(sl(),sl(),));
+    sl.registerFactory(() => MoviesBloc(
+          sl(),
+          sl(),
+          sl(),
+        ));
+    sl.registerFactory(() => MovieDetailsBloc(
+          sl(),
+          sl(),
+        ));
 
     //Use Cases
     sl.registerLazySingleton(() => GetNowPlayingMoviesUseCase(sl()));
@@ -29,7 +36,6 @@ class ServicesLocator {
     //Repository
     sl.registerLazySingleton<BaseMoviesRepository>(
         () => MoviesRepository(sl()));
-
     //Data Source
     sl.registerLazySingleton<MoviesBaseRemoteDateSource>(
         () => MoviesRemoteDateSource());
